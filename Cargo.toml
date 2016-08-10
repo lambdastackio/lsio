@@ -4,23 +4,24 @@ version = "0.1.0"
 authors = ["Chris Jones <cj@hanscj.com>"]
 license = "Apache-2.0"
 readme = "README.md"
-keywords = ["devops", "automation", "CI", "CD"]
+keywords = ["ssh", "log", "password", "devops", "automation", "CI", "CD"]
 repository = "https://github.com/lambdastackio/lsio"
 homepage = "https://github.com/lambdastackio/lsio"
 documentation = "https://github.com/lambdastackio/lsio"
 description = """
-lsio is the library for lsio command line utility and s3lsio. Heavy dev beware!
+lsio is the library for lsio command line utility and s3lsio. The library applies a simple abstraction on a number of
+good libraries plus adds a number of it's own. Heavy dev beware!
 """
 
 [dependencies]
-ssh2 = "*"
-rpassword = "*"
-ansi_term = "*"
-errno = "*"
-semver = "*"
-log = "*"
-env_logger = "*"
-rustc-serialize = "*"
+ssh2 = "0.2.13"
+rpassword = "0.2.3"
+ansi_term = "0.8.0"
+errno = "0.1.8"
+semver = "0.4.0"
+log = "0.3.6"
+env_logger = "0.3.4"
+rustc-serialize = "0.3.19"
 
 #[dependencies.url]
 #git = "https://github.com/servo/rust-url"
