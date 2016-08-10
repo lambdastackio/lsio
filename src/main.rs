@@ -17,7 +17,7 @@
 #[macro_use]
 extern crate lsio;
 extern crate ansi_term;
-extern crate url;
+//extern crate url;
 extern crate semver;
 #[macro_use]
 extern crate log;
@@ -30,7 +30,7 @@ use std::iter;
 //use std::io::Result;
 use std::env::consts;
 use ansi_term::Colour::{Red, Green};
-use url::Url;
+//use url::Url;
 use semver::Version;
 
 use lsio::command::run_cli;
@@ -152,13 +152,13 @@ fn main() {
 
     println!("{}", if output.len() > 0 {if n == 0 {Green.paint(output)} else {Red.paint(output)}} else {Red.paint(desc)});
 
-    repeat!("-", 80);
+    //repeat!("-", 80);
 
-    let issue_list_url = Url::parse(
-        "https://github.com/rust-lang/rust/issues?labels=E-easy&state=open"
-    ).unwrap();
+    //let issue_list_url = Url::parse(
+    //    "https://github.com/rust-lang/rust/issues?labels=E-easy&state=open"
+    //).unwrap();
 
-    println!("{:?}", issue_list_url);
+    //println!("{:?}", issue_list_url);
 
     repeat!("-", 80);
 

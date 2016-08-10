@@ -22,5 +22,5 @@ log = "*"
 env_logger = "*"
 rustc-serialize = "*"
 
-[dependencies.url]
-git = "https://github.com/servo/rust-url"
+#[dependencies.url]
+#git = "https://github.com/servo/rust-url"
