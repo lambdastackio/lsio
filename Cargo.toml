@@ -9,7 +9,7 @@ repository = "https://github.com/lambdastackio/lsio"
 homepage = "https://github.com/lambdastackio/lsio"
 documentation = "https://github.com/lambdastackio/lsio"
 description = """
-lsio is the primary cli utility for the LambdaStack.io CI/CD solution.
+lsio is the library for lsio command line utility and s3lsio. Heavy dev beware!
 """
 
 [dependencies]
