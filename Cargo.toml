@@ -1,0 +1,26 @@
+[package]
+name = "lsio"
+version = "0.1.0"
+authors = ["Chris Jones <cj@hanscj.com>"]
+license = "Apache-2.0"
+readme = "README.md"
+keywords = ["devops", "automation", "CI", "CD"]
+repository = "https://github.com/lambdastackio/lsio"
+homepage = "https://github.com/lambdastackio/lsio"
+documentation = "https://github.com/lambdastackio/lsio"
+description = """
+lsio is the primary cli utility for the LambdaStack.io CI/CD solution.
+"""
+
+[dependencies]
+ssh2 = "*"
+rpassword = "*"
+ansi_term = "*"
+errno = "*"
+semver = "*"
+log = "*"
+env_logger = "*"
+rustc-serialize = "*"
+
+[dependencies.url]
+git = "https://github.com/servo/rust-url"
