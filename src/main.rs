@@ -14,6 +14,12 @@
  limitations under the License.
 */
 
+/////////////////////////////////////
+// NOTE: This is only a test file used to test a few scenarios to the library routines.
+// The code once it works is commented out and left in the file as a reference.
+// DO NOT MISTAKE THIS AS PART OF THE LIBRARY!!
+/////////////////////////////////////
+
 #[macro_use]
 extern crate lsio;
 extern crate ansi_term;
