@@ -7,7 +7,7 @@ readme = "README.md"
 keywords = ["ssh", "log", "devops", "automation"]
 repository = "https://github.com/lambdastackio/lsio"
 homepage = "https://github.com/lambdastackio/lsio"
-documentation = "https://github.com/lambdastackio/lsio/docs"
+documentation = "https://lambdastackio.github.io/lsio/lsio"
 description = """
 lsio is the library for lsio command line utility and s3lsio. The library applies a simple abstraction on a number of
 good libraries plus adds a number of it's own. Heavy dev beware!
