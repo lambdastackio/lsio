@@ -1,27 +1,23 @@
 [package]
 name = "lsio"
-version = "0.1.0"
-authors = ["Chris Jones <cj@hanscj.com>"]
+version = "0.1.1"
+authors = ["Chris Jones <chris.jones@lambdastack.io>"]
 license = "Apache-2.0"
 readme = "README.md"
 keywords = ["ssh", "log", "devops", "automation"]
 repository = "https://github.com/lambdastackio/lsio"
 homepage = "https://github.com/lambdastackio/lsio"
-documentation = "https://github.com/lambdastackio/lsio"
+documentation = "https://github.com/lambdastackio/lsio/docs"
 description = """
 lsio is the library for lsio command line utility and s3lsio. The library applies a simple abstraction on a number of
 good libraries plus adds a number of it's own. Heavy dev beware!
 """
 
 [dependencies]
-ssh2 = "0.2.13"
+ssh2 = "0.2"
 rpassword = "0.2.3"
-ansi_term = "0.8.0"
+term = "0.4"
 errno = "0.1.8"
-semver = "0.4.0"
 log = "0.3.6"
 env_logger = "0.3.4"
 rustc-serialize = "0.3.19"
-
-#[dependencies.url]
-#git = "https://github.com/servo/rust-url"
