@@ -1,0 +1,1 @@
+initSidebarItems({"macro":[["print_color","print! with a specific color."],["println_color","println! with a specific color."],["repeat","repeat - Prints out a repeat of characters"],["repeat_color","repeat_color - Prints out a repeat of characters in a specific color."]],"mod":[["commands",""],["error",""],["macros",""],["prompts",""]]});

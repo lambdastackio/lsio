@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["confirm","confirmation prompt in a specific color."]]});
