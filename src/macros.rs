@@ -32,12 +32,44 @@ macro_rules! print_color {
     };
 }
 
+/// print_color! with quiet option.
+///
+#[macro_export]
+macro_rules! println_color_quiet {
+    ($quiet:expr, $color:expr, $($arg:tt)*) => {
+        {
+            if $quiet != false {
+                let mut t = term::stderr().unwrap();
+                t.fg($color).unwrap();
+                print!($($arg)*);
+                t.reset().unwrap();
+            }
+        }
+    };
+}
+
 /// println! with a specific color.
 ///
 #[macro_export]
 macro_rules! println_color {
     ($color:expr, $fmt:expr) => (print_color!($color, concat!($fmt, "\n")));
     ($color:expr, $fmt:expr, $($arg:tt)*) => (print_color!($color, concat!($fmt, "\n"), $($arg)*));
+}
+
+/// println_color! with a quiet option.
+///
+#[macro_export]
+macro_rules! println_color_quiet {
+    ($quiet: expr, $color:expr, $fmt:expr) => {
+        if $quiet != false {
+            print_color!($color, concat!($fmt, "\n"));
+        }
+    };
+    ($quiet: expr, $color:expr, $fmt:expr, $($arg:tt)*) => {
+        if $quiet != false {
+            print_color!($color, concat!($fmt, "\n"), $($arg)*);
+        }
+    };
 }
 
 /// repeat_color - Prints out a repeat of characters in a specific color.
@@ -53,6 +85,17 @@ macro_rules! repeat_color {
     ($color:expr, $e:expr, $size:expr) => {
         let repeated: String = iter::repeat($e).take($size).collect();
         println_color!($color, "{}", repeated);
+    }
+}
+
+/// repeat_color! with quiet option.
+#[macro_export]
+macro_rules! repeat_color_quiet {
+    ($quiet:expr, $color:expr, $e:expr, $size:expr) => {
+        if $quiet != false {
+            let repeated: String = iter::repeat($e).take($size).collect();
+            println_color!($color, "{}", repeated);
+        }
     }
 }
 
