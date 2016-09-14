@@ -18,7 +18,6 @@
        html_favicon_url = "https://www.rust-lang.org/favicon.ico",
        html_root_url = "https://lambdastackio.github.io/lsio/lsio/index.html")]
 
-
 extern crate rustc_serialize;
 extern crate term;
 

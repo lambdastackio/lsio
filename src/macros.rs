@@ -13,17 +13,22 @@
 // limitations under the License.
 //
 
+#[allow(unused_imports)]
 use term;
+
+// NOTE: Had to add {} block around let mut t below because it was a statement.
 
 /// print! with a specific color.
 ///
 #[macro_export]
 macro_rules! print_color {
     ($color:expr, $($arg:tt)*) => {
+        {
         let mut t = term::stderr().unwrap();
         t.fg($color).unwrap();
         print!($($arg)*);
         t.reset().unwrap();
+        }
     };
 }
 
