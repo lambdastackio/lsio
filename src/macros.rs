@@ -93,6 +93,7 @@ macro_rules! repeat_color {
 macro_rules! repeat_color_quiet {
     ($quiet:expr, $color:expr, $e:expr, $size:expr) => {
         if $quiet != false {
+            use std::iter;
             let repeated: String = iter::repeat($e).take($size).collect();
             println_color!($color, "{}", repeated);
         }
