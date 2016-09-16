@@ -85,9 +85,12 @@ macro_rules! repeat_color {
     ($color:expr, $e:expr, $text:expr, $size:expr) => {
         let overlay: String = String::from($text);
         let len = overlay.len();
-        let repeat_size: u16 = ($size - len)/2;
-        let repeated: String = iter::repeat($e).take($size).collect();
-        println_color!($color, "{}{}{}", repeated, overlay, repeated);
+        let repeat_size: usize = ($size - len)/2;
+        let repeated: String = iter::repeat($e).take(repeat_size).collect();
+        // Fill is required since dealing with blocks instead of pixels so some may have an extra $e
+        let fill_size: usize = $size - ((repeat_size * 2) + len);
+        let fill: String = iter::repeat($e).take(fill_size).collect();
+        println_color!($color, "{}{}{}{}", repeated, overlay, repeated, fill);
     }
 }
 
