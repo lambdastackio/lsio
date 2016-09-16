@@ -78,24 +78,25 @@ macro_rules! println_color_quiet {
 ///
 /// # Example
 /// ```
-/// repeat_color!(term::color::RED, "=", 80);
+/// repeat_color!(term::color::RED, "=", "", 80);
 /// ```
 #[macro_export]
 macro_rules! repeat_color {
-    ($color:expr, $e:expr, $size:expr) => {
+    ($color:expr, $e:expr, $text:expr, $size:expr) => {
+        let overlay: String = String::from($text);
+        let len = overlay.len();
+        let repeat_size: u16 = ($size - len)/2;
         let repeated: String = iter::repeat($e).take($size).collect();
-        println_color!($color, "{}", repeated);
+        println_color!($color, "{}{}{}", repeated, overlay, repeated);
     }
 }
 
 /// repeat_color! with quiet option.
 #[macro_export]
 macro_rules! repeat_color_quiet {
-    ($quiet:expr, $color:expr, $e:expr, $size:expr) => {
+    ($quiet:expr, $color:expr, $e:expr, $text, $size:expr) => {
         if $quiet != false {
-            use std::iter;
-            let repeated: String = iter::repeat($e).take($size).collect();
-            println_color!($color, "{}", repeated);
+            repeat_color!($color, $e, $text, $size);
         }
     }
 }
@@ -106,11 +107,11 @@ macro_rules! repeat_color_quiet {
 ///
 /// # Example
 /// ```
-/// repeat!("=", 80);
+/// repeat!("=", "", 80);
 /// ```
 #[macro_export]
 macro_rules! repeat {
-    ($e:expr, $size:expr) => {
-        repeat_color!(term::color::WHITE, $e, $size);
+    ($e:expr, $text:expr, $size:expr) => {
+        repeat_color!(term::color::WHITE, $e, $text, $size);
     }
 }

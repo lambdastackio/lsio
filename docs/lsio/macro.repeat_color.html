@@ -47,10 +47,10 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a id='src-150' class='srclink' href='../src/lsio/src/macros.rs.html#84-89' title='goto source code'>[src]</a></span></h1>
+               </span><a id='src-150' class='srclink' href='../src/lsio/src/macros.rs.html#84-92' title='goto source code'>[src]</a></span></h1>
 <pre class='rust macro'>
 <span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>repeat_color</span> {
-    (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>color</span>:<span class='ident'>expr</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>e</span>:<span class='ident'>expr</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>size</span>:<span class='ident'>expr</span>) <span class='op'>=&gt;</span> { ... };
+    (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>color</span>:<span class='ident'>expr</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>e</span>:<span class='ident'>expr</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>text</span>:<span class='ident'>expr</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>size</span>:<span class='ident'>expr</span>) <span class='op'>=&gt;</span> { ... };
 }</pre>
 <div class='docblock'><p>repeat_color - Prints out a repeat of characters in a specific color.</p>
 
@@ -58,7 +58,7 @@
 
 <h1 id='example' class='section-header'><a href='#example'>Example</a></h1>
 <pre class='rust rust-example-rendered'>
-<span class='macro'>repeat_color</span><span class='macro'>!</span>(<span class='ident'>term</span>::<span class='ident'>color</span>::<span class='ident'>RED</span>, <span class='string'>&quot;=&quot;</span>, <span class='number'>80</span>);</pre>
+<span class='macro'>repeat_color</span><span class='macro'>!</span>(<span class='ident'>term</span>::<span class='ident'>color</span>::<span class='ident'>RED</span>, <span class='string'>&quot;=&quot;</span>, <span class='string'>&quot;&quot;</span>, <span class='number'>80</span>);<a class='test-arrow' target='_blank' href=''>Run</a></pre>
 </div></section>
     <section id='search' class="content hidden"></section>
 

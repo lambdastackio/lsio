@@ -157,6 +157,8 @@
 <span id="113">113</span>
 <span id="114">114</span>
 <span id="115">115</span>
+<span id="116">116</span>
+<span id="117">117</span>
 </pre><pre class='rust '>
 <span class='comment'>// Copyright 2016 LambdaStack All rights reserved.</span>
 <span class='comment'>//</span>
@@ -238,23 +240,25 @@
 <span class='doccomment'>///</span>
 <span class='doccomment'>/// # Example</span>
 <span class='doccomment'>/// ```</span>
-<span class='doccomment'>/// repeat_color!(term::color::RED, &quot;=&quot;, 80);</span>
+<span class='doccomment'>/// repeat_color!(term::color::RED, &quot;=&quot;, &quot;&quot;, 80);</span>
 <span class='doccomment'>/// ```</span>
 <span class='attribute'>#[<span class='ident'>macro_export</span>]</span>
 <span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>repeat_color</span> {
-    (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>color</span>:<span class='ident'>expr</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>e</span>:<span class='ident'>expr</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>size</span>:<span class='ident'>expr</span>) <span class='op'>=&gt;</span> {
+    (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>color</span>:<span class='ident'>expr</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>e</span>:<span class='ident'>expr</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>text</span>:<span class='ident'>expr</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>size</span>:<span class='ident'>expr</span>) <span class='op'>=&gt;</span> {
+        <span class='kw'>let</span> <span class='ident'>overlay</span>: <span class='ident'>String</span> <span class='op'>=</span> <span class='ident'>String</span>::<span class='ident'>from</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>text</span>);
+        <span class='kw'>let</span> <span class='ident'>len</span> <span class='op'>=</span> <span class='ident'>overlay</span>.<span class='ident'>len</span>();
+        <span class='kw'>let</span> <span class='ident'>repeat_size</span>: <span class='ident'>u16</span> <span class='op'>=</span> (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>size</span> <span class='op'>-</span> <span class='ident'>len</span>)<span class='op'>/</span><span class='number'>2</span>;
         <span class='kw'>let</span> <span class='ident'>repeated</span>: <span class='ident'>String</span> <span class='op'>=</span> <span class='ident'>iter</span>::<span class='ident'>repeat</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>e</span>).<span class='ident'>take</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>size</span>).<span class='ident'>collect</span>();
-        <span class='macro'>println_color</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>color</span>, <span class='string'>&quot;{}&quot;</span>, <span class='ident'>repeated</span>);
+        <span class='macro'>println_color</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>color</span>, <span class='string'>&quot;{}{}{}&quot;</span>, <span class='ident'>repeated</span>, <span class='ident'>overlay</span>, <span class='ident'>repeated</span>);
     }
 }
 
 <span class='doccomment'>/// repeat_color! with quiet option.</span>
 <span class='attribute'>#[<span class='ident'>macro_export</span>]</span>
 <span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>repeat_color_quiet</span> {
-    (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>quiet</span>:<span class='ident'>expr</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>color</span>:<span class='ident'>expr</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>e</span>:<span class='ident'>expr</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>size</span>:<span class='ident'>expr</span>) <span class='op'>=&gt;</span> {
+    (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>quiet</span>:<span class='ident'>expr</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>color</span>:<span class='ident'>expr</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>e</span>:<span class='ident'>expr</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>text</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>size</span>:<span class='ident'>expr</span>) <span class='op'>=&gt;</span> {
         <span class='kw'>if</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>quiet</span> <span class='op'>!=</span> <span class='bool-val'>false</span> {
-            <span class='kw'>let</span> <span class='ident'>repeated</span>: <span class='ident'>String</span> <span class='op'>=</span> <span class='ident'>iter</span>::<span class='ident'>repeat</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>e</span>).<span class='ident'>take</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>size</span>).<span class='ident'>collect</span>();
-            <span class='macro'>println_color</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>color</span>, <span class='string'>&quot;{}&quot;</span>, <span class='ident'>repeated</span>);
+            <span class='macro'>repeat_color</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>color</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>e</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>text</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>size</span>);
         }
     }
 }
@@ -265,12 +269,12 @@
 <span class='doccomment'>///</span>
 <span class='doccomment'>/// # Example</span>
 <span class='doccomment'>/// ```</span>
-<span class='doccomment'>/// repeat!(&quot;=&quot;, 80);</span>
+<span class='doccomment'>/// repeat!(&quot;=&quot;, &quot;&quot;, 80);</span>
 <span class='doccomment'>/// ```</span>
 <span class='attribute'>#[<span class='ident'>macro_export</span>]</span>
 <span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>repeat</span> {
-    (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>e</span>:<span class='ident'>expr</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>size</span>:<span class='ident'>expr</span>) <span class='op'>=&gt;</span> {
-        <span class='macro'>repeat_color</span><span class='macro'>!</span>(<span class='ident'>term</span>::<span class='ident'>color</span>::<span class='ident'>WHITE</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>e</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>size</span>);
+    (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>e</span>:<span class='ident'>expr</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>text</span>:<span class='ident'>expr</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>size</span>:<span class='ident'>expr</span>) <span class='op'>=&gt;</span> {
+        <span class='macro'>repeat_color</span><span class='macro'>!</span>(<span class='ident'>term</span>::<span class='ident'>color</span>::<span class='ident'>WHITE</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>e</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>text</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>size</span>);
     }
 }
 </pre>

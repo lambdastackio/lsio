@@ -58,6 +58,8 @@ pub fn run_args(cmd: &str, args: &[String], shell: bool) -> Result<(Output)> {
 /// ```
 /// run_cli("ps aux");
 /// ```
+
+// NOTE: Add Into so a "" can also be passed in...
 pub fn run_cli(cmd_line: String) -> Result<(Output)> {
     let output = try!(Command::new("sh").arg("-c").arg(&cmd_line).output());
     Ok(output)

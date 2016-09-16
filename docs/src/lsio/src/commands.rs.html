@@ -129,6 +129,8 @@
 <span id="85">85</span>
 <span id="86">86</span>
 <span id="87">87</span>
+<span id="88">88</span>
+<span id="89">89</span>
 </pre><pre class='rust '>
 <span class='comment'>// Copyright 2016 LambdaStack All rights reserved.</span>
 <span class='comment'>//</span>
@@ -190,6 +192,8 @@
 <span class='doccomment'>/// ```</span>
 <span class='doccomment'>/// run_cli(&quot;ps aux&quot;);</span>
 <span class='doccomment'>/// ```</span>
+
+<span class='comment'>// NOTE: Add Into so a &quot;&quot; can also be passed in...</span>
 <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>run_cli</span>(<span class='ident'>cmd_line</span>: <span class='ident'>String</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(<span class='ident'>Output</span>)<span class='op'>&gt;</span> {
     <span class='kw'>let</span> <span class='ident'>output</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>Command</span>::<span class='ident'>new</span>(<span class='string'>&quot;sh&quot;</span>).<span class='ident'>arg</span>(<span class='string'>&quot;-c&quot;</span>).<span class='ident'>arg</span>(<span class='kw-2'>&amp;</span><span class='ident'>cmd_line</span>).<span class='ident'>output</span>());
     <span class='prelude-val'>Ok</span>(<span class='ident'>output</span>)
