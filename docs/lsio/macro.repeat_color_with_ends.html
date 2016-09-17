@@ -4,10 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="API documentation for the Rust `repeat_color_quiet` macro in crate `lsio`.">
-    <meta name="keywords" content="rust, rustlang, rust-lang, repeat_color_quiet">
+    <meta name="description" content="API documentation for the Rust `repeat_color_with_ends` macro in crate `lsio`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, repeat_color_with_ends">
 
-    <title>lsio::repeat_color_quiet - Rust</title>
+    <title>lsio::repeat_color_with_ends - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../main.css">
@@ -28,7 +28,7 @@
 
     <nav class="sidebar">
         <a href='../lsio/index.html'><img src='https://www.rust-lang.org/logos/rust-logo-128x128-blk-v2.png' alt='logo' width='100'></a>
-        <p class='location'><a href='index.html'>lsio</a></p><script>window.sidebarCurrent = {name: 'repeat_color_quiet', ty: 'macro', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'><a href='index.html'>lsio</a></p><script>window.sidebarCurrent = {name: 'repeat_color_with_ends', ty: 'macro', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -43,16 +43,23 @@
     </nav>
 
     <section id='main' class="content macro">
-<h1 class='fqn'><span class='in-band'>Macro <a href='index.html'>lsio</a>::<wbr><a class='macro' href=''>repeat_color_quiet</a></span><span class='out-of-band'><span id='render-detail'>
+<h1 class='fqn'><span class='in-band'>Macro <a href='index.html'>lsio</a>::<wbr><a class='macro' href=''>repeat_color_with_ends</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a id='src-152' class='srclink' href='../src/lsio/src/macros.rs.html#126-132' title='goto source code'>[src]</a></span></h1>
+               </span><a id='src-151' class='srclink' href='../src/lsio/src/macros.rs.html#107-121' title='goto source code'>[src]</a></span></h1>
 <pre class='rust macro'>
-<span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>repeat_color_quiet</span> {
-    (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>quiet</span>:<span class='ident'>expr</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>color</span>:<span class='ident'>expr</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>e</span>:<span class='ident'>expr</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>text</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>size</span>:<span class='ident'>expr</span>) <span class='op'>=&gt;</span> { ... };
+<span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>repeat_color_with_ends</span> {
+    (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>color</span>:<span class='ident'>expr</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>e</span>:<span class='ident'>expr</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>text</span>:<span class='ident'>expr</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>lend</span>:<span class='ident'>expr</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>rend</span>:<span class='ident'>expr</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>size</span>:<span class='ident'>expr</span>) <span class='op'>=&gt;</span> { ... };
 }</pre>
-<div class='docblock'><p>repeat_color! with quiet option.</p>
+<div class='docblock'><p>repeat_color_with_ends - Prints out a repeat of characters in a specific color and centers
+any text passed in along with printing left end and right end characters.</p>
+
+<p>Currently prints characters using the color specified.</p>
+
+<h1 id='example' class='section-header'><a href='#example'>Example</a></h1>
+<pre class='rust rust-example-rendered'>
+<span class='macro'>repeat_color</span><span class='macro'>!</span>(<span class='ident'>term</span>::<span class='ident'>color</span>::<span class='ident'>RED</span>, <span class='string'>&quot;=&quot;</span>, <span class='string'>&quot;&quot;</span>, <span class='number'>80</span>);<a class='test-arrow' target='_blank' href=''>Run</a></pre>
 </div></section>
     <section id='search' class="content hidden"></section>
 

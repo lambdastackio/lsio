@@ -94,6 +94,33 @@ macro_rules! repeat_color {
     }
 }
 
+/// repeat_color_with_ends - Prints out a repeat of characters in a specific color and centers
+/// any text passed in along with printing left end and right end characters.
+///
+/// Currently prints characters using the color specified.
+///
+/// # Example
+/// ```
+/// repeat_color!(term::color::RED, "=", "", 80);
+/// ```
+#[macro_export]
+macro_rules! repeat_color_with_ends {
+    ($color:expr, $e:expr, $text:expr, $lend:expr, $rend:expr, $size:expr) => {
+        let overlay: String = String::from($text);
+        let left_end: String = String::from($lend);
+        let right_end: String = String::from($rend);
+        let len = overlay.len();
+        let end_len = left_end.len() + right_end.len();
+        let repeat_size: usize = (($size - end_len) - len)/2;
+        let repeated: String = iter::repeat($e).take(repeat_size).collect();
+        // Fill is required since dealing with blocks instead of pixels so some may have an extra $e
+        let fill_size: usize = $size - end_len - ((repeat_size * 2) + len);
+        let fill: String = iter::repeat($e).take(fill_size).collect();
+        println_color!($color, "{}{}{}{}{}{}", left_end, repeated, overlay, repeated, fill, right_end);
+    }
+}
+
+
 /// repeat_color! with quiet option.
 #[macro_export]
 macro_rules! repeat_color_quiet {
