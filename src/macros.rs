@@ -38,7 +38,7 @@ macro_rules! print_color {
 macro_rules! println_color_quiet {
     ($quiet:expr, $color:expr, $($arg:tt)*) => {
         {
-            if $quiet != false {
+            if $quiet == false {
                 let mut t = term::stderr().unwrap();
                 t.fg($color).unwrap();
                 print!($($arg)*);
@@ -61,12 +61,12 @@ macro_rules! println_color {
 #[macro_export]
 macro_rules! println_color_quiet {
     ($quiet: expr, $color:expr, $fmt:expr) => {
-        if $quiet != false {
+        if $quiet == false {
             print_color!($color, concat!($fmt, "\n"));
         }
     };
     ($quiet: expr, $color:expr, $fmt:expr, $($arg:tt)*) => {
-        if $quiet != false {
+        if $quiet == false {
             print_color!($color, concat!($fmt, "\n"), $($arg)*);
         }
     };
@@ -125,7 +125,7 @@ macro_rules! repeat_color_with_ends {
 #[macro_export]
 macro_rules! repeat_color_quiet {
     ($quiet:expr, $color:expr, $e:expr, $text, $size:expr) => {
-        if $quiet != false {
+        if $quiet == false {
             repeat_color!($color, $e, $text, $size);
         }
     }
