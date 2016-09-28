@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `ConfigFile` trait in crate `lsio`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, ConfigFile">
+
+    <title>lsio::config::ConfigFile - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css">
+    
+
+    <link rel="shortcut icon" href="https://lambdastackio.github.io/static/images/favicon.ico">
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        <a href='../../lsio/index.html'><img src='https://lambdastackio.github.io/static/images/lambdastack-200x200.png' alt='logo' width='100'></a>
+        <p class='location'><a href='../index.html'>lsio</a>::<wbr><a href='index.html'>config</a></p><script>window.sidebarCurrent = {name: 'ConfigFile', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content trait">
+<h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>lsio</a>::<wbr><a href='index.html'>config</a>::<wbr><a class='trait' href=''>ConfigFile</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a id='src-157' class='srclink' href='../../src/lsio/src/config.rs.html#73-96' title='goto source code'>[src]</a></span></h1>
+<pre class='rust trait'>pub trait ConfigFile: <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a> {
+    type <a href='#associatedtype.Error' class='type'>Error</a>: <a class='trait' href='https://doc.rust-lang.org/nightly/std/error/trait.Error.html' title='std::error::Error'>Error</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html' title='core::convert::From'>From</a>&lt;<a class='enum' href='../../lsio/error/enum.Error.html' title='lsio::error::Error'>Error</a>&gt;;
+    fn <a href='#tymethod.from_toml' class='fnname'>from_toml</a>(toml: <a class='enum' href='http://alexcrichton.com/toml-rs/toml/enum.Value.html' title='toml::Value'>Value</a>) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;Self,&nbsp;Self::Error&gt;;
+
+    fn <a href='#method.from_file' class='fnname'>from_file</a>&lt;T:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html' title='core::convert::AsRef'>AsRef</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/std/path/struct.Path.html' title='std::path::Path'>Path</a>&gt;&gt;(filepath: T) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;Self,&nbsp;Self::Error&gt; { ... }
+}</pre><div class='docblock'><p>Defines the default ConfigFile operation of <code>from_file</code> and <code>from_toml</code></p>
+
+<p><code>from_toml</code> should be implemented in the calling project for a Config struct that
+you define. For example:</p>
+
+<h1 id='deriveclone-debug-partialeq-eq' class='section-header'><a href='#deriveclone-debug-partialeq-eq'>[derive(Clone, Debug, PartialEq, Eq)]</a></h1>
+<p>pub struct Config {
+    pub endpoint: Option<String>,
+    pub proxy: Option<String>,
+}</p>
+
+<p>impl ConfigFile for Config {
+    type Error = Error;</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>fn</span> <span class='ident'>from_toml</span>(<span class='ident'>toml</span>: <span class='ident'>toml</span>::<span class='ident'>Value</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='self'>Self</span><span class='op'>&gt;</span> {
+    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>cfg</span> <span class='op'>=</span> <span class='ident'>Config</span>::<span class='ident'>default</span>();
+
+    <span class='kw'>let</span> <span class='ident'>endpoint</span> <span class='op'>=</span> <span class='kw'>match</span> <span class='ident'>toml</span>.<span class='ident'>lookup</span>(<span class='string'>&quot;options.endpoint&quot;</span>) {
+        <span class='prelude-val'>Some</span>(<span class='ident'>ep</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>ep</span>.<span class='ident'>as_str</span>().<span class='ident'>unwrap</span>().<span class='ident'>to_string</span>()),
+        <span class='prelude-val'>None</span> <span class='op'>=&gt;</span> <span class='prelude-val'>None</span>,
+    };
+
+    <span class='kw'>let</span> <span class='ident'>proxy</span> <span class='op'>=</span> <span class='kw'>match</span> <span class='ident'>toml</span>.<span class='ident'>lookup</span>(<span class='string'>&quot;options.proxy&quot;</span>) {
+        <span class='prelude-val'>Some</span>(<span class='ident'>p</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>p</span>.<span class='ident'>as_str</span>().<span class='ident'>unwrap</span>().<span class='ident'>to_string</span>()),
+        <span class='prelude-val'>None</span> <span class='op'>=&gt;</span> <span class='prelude-val'>None</span>,
+    };
+
+    <span class='ident'>cfg</span>.<span class='ident'>endpoint</span> <span class='op'>=</span> <span class='ident'>endpoint</span>;
+    <span class='ident'>cfg</span>.<span class='ident'>proxy</span> <span class='op'>=</span> <span class='ident'>proxy</span>;
+
+    <span class='prelude-val'>Ok</span>(<span class='ident'>cfg</span>)
+}<a class='test-arrow' target='_blank' href=''>Run</a></pre>
+
+<p>}</p>
+
+<p>impl Default for Config {
+    fn default() -&gt; Self {
+        Config {
+            endpoint: None,
+            proxy: None,
+        }
+    }
+}</p>
+</div>
+            <h2 id='associated-types'>Associated Types</h2>
+            <div class='methods'>
+        <h3 id='associatedtype.Error' class='method stab '><span id='Error.t' class='invisible'><code>type <a href='#associatedtype.Error' class='type'>Error</a>: <a class='trait' href='https://doc.rust-lang.org/nightly/std/error/trait.Error.html' title='std::error::Error'>Error</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html' title='core::convert::From'>From</a>&lt;<a class='enum' href='../../lsio/error/enum.Error.html' title='lsio::error::Error'>Error</a>&gt;</code></span></h3></div>
+            <h2 id='required-methods'>Required Methods</h2>
+            <div class='methods'>
+        <h3 id='tymethod.from_toml' class='method stab '><span id='from_toml.v' class='invisible'><code>fn <a href='#tymethod.from_toml' class='fnname'>from_toml</a>(toml: <a class='enum' href='http://alexcrichton.com/toml-rs/toml/enum.Value.html' title='toml::Value'>Value</a>) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;Self,&nbsp;Self::Error&gt;</code></span></h3></div>
+            <h2 id='provided-methods'>Provided Methods</h2>
+            <div class='methods'>
+        <h3 id='method.from_file' class='method stab '><span id='from_file.v' class='invisible'><code>fn <a href='#method.from_file' class='fnname'>from_file</a>&lt;T:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html' title='core::convert::AsRef'>AsRef</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/std/path/struct.Path.html' title='std::path::Path'>Path</a>&gt;&gt;(filepath: T) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;Self,&nbsp;Self::Error&gt;</code></span></h3></div>
+        <h2 id='implementors'>Implementors</h2>
+        <ul class='item-list' id='implementors-list'>
+    </ul><script type="text/javascript" async
+                         src="../../implementors/lsio/config/trait.ConfigFile.js">
+                 </script></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../../";
+        window.currentCrate = "lsio";
+        window.playgroundUrl = "";
+    </script>
+    <script src="../../jquery.js"></script>
+    <script src="../../main.js"></script>
+    
+    <script defer src="../../search-index.js"></script>
+</body>
+</html>

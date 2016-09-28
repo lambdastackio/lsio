@@ -4,13 +4,13 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="API documentation for the Rust `repeat_color` macro in crate `lsio`.">
-    <meta name="keywords" content="rust, rustlang, rust-lang, repeat_color">
+    <meta name="description" content="API documentation for the Rust `config` mod in crate `lsio`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, config">
 
-    <title>lsio::repeat_color - Rust</title>
+    <title>lsio::config - Rust</title>
 
-    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../main.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css">
     
 
     <link rel="shortcut icon" href="https://lambdastackio.github.io/static/images/favicon.ico">
@@ -27,8 +27,8 @@
     
 
     <nav class="sidebar">
-        <a href='../lsio/index.html'><img src='https://lambdastackio.github.io/static/images/lambdastack-200x200.png' alt='logo' width='100'></a>
-        <p class='location'><a href='index.html'>lsio</a></p><script>window.sidebarCurrent = {name: 'repeat_color', ty: 'macro', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <a href='../../lsio/index.html'><img src='https://lambdastackio.github.io/static/images/lambdastack-200x200.png' alt='logo' width='100'></a>
+        <p class='location'><a href='../index.html'>lsio</a></p><script>window.sidebarCurrent = {name: 'config', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -42,24 +42,28 @@
         </form>
     </nav>
 
-    <section id='main' class="content macro">
-<h1 class='fqn'><span class='in-band'>Macro <a href='index.html'>lsio</a>::<wbr><a class='macro' href=''>repeat_color</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content mod">
+<h1 class='fqn'><span class='in-band'>Module <a href='../index.html'>lsio</a>::<wbr><a class='mod' href=''>config</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a id='src-326' class='srclink' href='../src/lsio/src/macros.rs.html#84-95' title='goto source code'>[src]</a></span></h1>
-<pre class='rust macro'>
-<span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>repeat_color</span> {
-    (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>color</span>:<span class='ident'>expr</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>e</span>:<span class='ident'>expr</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>text</span>:<span class='ident'>expr</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>size</span>:<span class='ident'>expr</span>) <span class='op'>=&gt;</span> { ... };
-}</pre>
-<div class='docblock'><p>repeat_color - Prints out a repeat of characters in a specific color.</p>
-
-<p>Currently prints characters using the color specified.</p>
-
-<h1 id='example' class='section-header'><a href='#example'>Example</a></h1>
-<pre class='rust rust-example-rendered'>
-<span class='macro'>repeat_color</span><span class='macro'>!</span>(<span class='ident'>term</span>::<span class='ident'>color</span>::<span class='ident'>RED</span>, <span class='string'>&quot;=&quot;</span>, <span class='string'>&quot;&quot;</span>, <span class='number'>80</span>);<a class='test-arrow' target='_blank' href=''>Run</a></pre>
-</div></section>
+               </span><a id='src-146' class='srclink' href='../../src/lsio/src/config.rs.html#15-378' title='goto source code'>[src]</a></span></h1>
+<h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class='trait' href='trait.ConfigFile.html'
+                                  title='lsio::config::ConfigFile'>ConfigFile</a></td>
+                           <td class='docblock-short'>
+                                <p>Defines the default ConfigFile operation of <code>from_file</code> and <code>from_toml</code></p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='trait' href='trait.ParseInto.html'
+                                  title='lsio::config::ParseInto'>ParseInto</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr></table></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>
@@ -113,13 +117,13 @@
     
 
     <script>
-        window.rootPath = "../";
+        window.rootPath = "../../";
         window.currentCrate = "lsio";
         window.playgroundUrl = "";
     </script>
-    <script src="../jquery.js"></script>
-    <script src="../main.js"></script>
+    <script src="../../jquery.js"></script>
+    <script src="../../main.js"></script>
     
-    <script defer src="../search-index.js"></script>
+    <script defer src="../../search-index.js"></script>
 </body>
 </html>

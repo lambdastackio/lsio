@@ -143,6 +143,40 @@
 <span id="99"> 99</span>
 <span id="100">100</span>
 <span id="101">101</span>
+<span id="102">102</span>
+<span id="103">103</span>
+<span id="104">104</span>
+<span id="105">105</span>
+<span id="106">106</span>
+<span id="107">107</span>
+<span id="108">108</span>
+<span id="109">109</span>
+<span id="110">110</span>
+<span id="111">111</span>
+<span id="112">112</span>
+<span id="113">113</span>
+<span id="114">114</span>
+<span id="115">115</span>
+<span id="116">116</span>
+<span id="117">117</span>
+<span id="118">118</span>
+<span id="119">119</span>
+<span id="120">120</span>
+<span id="121">121</span>
+<span id="122">122</span>
+<span id="123">123</span>
+<span id="124">124</span>
+<span id="125">125</span>
+<span id="126">126</span>
+<span id="127">127</span>
+<span id="128">128</span>
+<span id="129">129</span>
+<span id="130">130</span>
+<span id="131">131</span>
+<span id="132">132</span>
+<span id="133">133</span>
+<span id="134">134</span>
+<span id="135">135</span>
 </pre><pre class='rust '>
 <span class='comment'>// Copyright 2016 LambdaStack All rights reserved.</span>
 <span class='comment'>//</span>
@@ -157,44 +191,74 @@
 <span class='comment'>// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
 <span class='comment'>// See the License for the specific language governing permissions and</span>
 <span class='comment'>// limitations under the License.</span>
-<span class='comment'>//</span>
+
+<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>allow</span>(<span class='ident'>dead_code</span>)]</span>
 
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>error</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>io</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>fmt</span>;
+<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>num</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>result</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>str</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>string</span>;
-<span class='kw'>use</span> <span class='ident'>rustc_serialize</span>::<span class='ident'>json</span>;
 
 <span class='kw'>pub</span> <span class='kw'>type</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='ident'>result</span>::<span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>T</span>, <span class='ident'>Error</span><span class='op'>&gt;</span>;
 
+<span class='doccomment'>/// Core error types</span>
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>Error</span> {
-    <span class='ident'>CryptoKeyError</span>(<span class='ident'>String</span>),
-    <span class='ident'>FileNameError</span>,
-    <span class='ident'>InvalidTomlError</span>(<span class='ident'>String</span>),
+    <span class='doccomment'>/// Error reading raw contents of configuration file.</span>
+    <span class='ident'>ConfigFileIO</span>(<span class='ident'>io</span>::<span class='ident'>Error</span>),
+    <span class='doccomment'>/// Parsing error while reading a configuration file.</span>
+    <span class='ident'>ConfigFileSyntax</span>(<span class='ident'>String</span>),
+    <span class='doccomment'>/// Expected a valid array of values for configuration field value.</span>
+    <span class='ident'>ConfigInvalidArray</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;static</span> <span class='ident'>str</span>),
+    <span class='doccomment'>/// Expected a valid Ipv4 network address for configuration field value.</span>
+    <span class='ident'>ConfigInvalidIpv4Addr</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;static</span> <span class='ident'>str</span>),
+    <span class='doccomment'>/// Expected a valid SocketAddrV4 address pair for configuration field value.</span>
+    <span class='ident'>ConfigInvalidSocketAddrV4</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;static</span> <span class='ident'>str</span>),
+    <span class='doccomment'>/// Expected a string for configuration field value.</span>
+    <span class='ident'>ConfigInvalidString</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;static</span> <span class='ident'>str</span>),
+    <span class='doccomment'>/// Occurs when a file that should exist does not or could not be read.</span>
+    <span class='ident'>FileNotFound</span>(<span class='ident'>String</span>),
     <span class='doccomment'>/// Occurs when making lower level IO calls.</span>
     <span class='ident'>IO</span>(<span class='ident'>io</span>::<span class='ident'>Error</span>),
-    <span class='ident'>JsonDecode</span>(<span class='ident'>json</span>::<span class='ident'>DecoderError</span>),
-    <span class='ident'>JsonEncode</span>(<span class='ident'>json</span>::<span class='ident'>EncoderError</span>),
-    <span class='ident'>StrFromUtf8Error</span>(<span class='ident'>str</span>::<span class='ident'>Utf8Error</span>),
+    <span class='doccomment'>/// When an error occurs parsing an integer.</span>
+    <span class='ident'>ParseIntError</span>(<span class='ident'>num</span>::<span class='ident'>ParseIntError</span>),
+    <span class='doccomment'>/// When an error occurs converting a `String` from a UTF-8 byte vector.</span>
     <span class='ident'>StringFromUtf8Error</span>(<span class='ident'>string</span>::<span class='ident'>FromUtf8Error</span>),
-    <span class='ident'>WireDecode</span>(<span class='ident'>String</span>),
+    <span class='doccomment'>/// When an error occurs attempting to interpret a sequence of u8 as a string.</span>
+    <span class='ident'>Utf8Error</span>(<span class='ident'>str</span>::<span class='ident'>Utf8Error</span>),
 }
 
 <span class='kw'>impl</span> <span class='ident'>fmt</span>::<span class='ident'>Display</span> <span class='kw'>for</span> <span class='ident'>Error</span> {
     <span class='kw'>fn</span> <span class='ident'>fmt</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>f</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>fmt</span>::<span class='ident'>Formatter</span>) <span class='op'>-&gt;</span> <span class='ident'>fmt</span>::<span class='prelude-ty'>Result</span> {
         <span class='kw'>let</span> <span class='ident'>msg</span> <span class='op'>=</span> <span class='kw'>match</span> <span class='op'>*</span><span class='self'>self</span> {
-            <span class='ident'>Error</span>::<span class='ident'>CryptoKeyError</span>(<span class='kw-2'>ref</span> <span class='ident'>s</span>) <span class='op'>=&gt;</span> <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;Missing or invalid key: {}&quot;</span>, <span class='ident'>s</span>),
-            <span class='ident'>Error</span>::<span class='ident'>FileNameError</span> <span class='op'>=&gt;</span> <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;Failed to extract a filename&quot;</span>),
-            <span class='ident'>Error</span>::<span class='ident'>InvalidTomlError</span>(<span class='kw-2'>ref</span> <span class='ident'>e</span>) <span class='op'>=&gt;</span> <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;Invalid TOML: {}&quot;</span>, <span class='ident'>e</span>),
+            <span class='ident'>Error</span>::<span class='ident'>ConfigFileIO</span>(<span class='kw-2'>ref</span> <span class='ident'>e</span>) <span class='op'>=&gt;</span> <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;Error reading configuration file: {}&quot;</span>, <span class='ident'>e</span>),
+            <span class='ident'>Error</span>::<span class='ident'>ConfigFileSyntax</span>(<span class='kw-2'>ref</span> <span class='ident'>e</span>) <span class='op'>=&gt;</span> {
+                <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;Syntax errors while parsing TOML configuration file:\n\n{}&quot;</span>,
+                        <span class='ident'>e</span>)
+            }
+            <span class='ident'>Error</span>::<span class='ident'>ConfigInvalidArray</span>(<span class='kw-2'>ref</span> <span class='ident'>f</span>) <span class='op'>=&gt;</span> {
+                <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;Invalid array of values in config, field={}&quot;</span>, <span class='ident'>f</span>)
+            }
+            <span class='ident'>Error</span>::<span class='ident'>ConfigInvalidIpv4Addr</span>(<span class='kw-2'>ref</span> <span class='ident'>f</span>) <span class='op'>=&gt;</span> {
+                <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;Invalid Ipv4 address in config, field={}. (example: \&quot;127.0.0.0\&quot;)&quot;</span>,
+                        <span class='ident'>f</span>)
+            }
+            <span class='ident'>Error</span>::<span class='ident'>ConfigInvalidSocketAddrV4</span>(<span class='kw-2'>ref</span> <span class='ident'>f</span>) <span class='op'>=&gt;</span> {
+                <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;Invalid Ipv4 network address pair in config, field={}. (example: \
+                         \&quot;127.0.0.0:8080\&quot;)&quot;</span>,
+                        <span class='ident'>f</span>)
+            }
+            <span class='ident'>Error</span>::<span class='ident'>ConfigInvalidString</span>(<span class='kw-2'>ref</span> <span class='ident'>f</span>) <span class='op'>=&gt;</span> {
+                <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;Invalid string value in config, field={}.&quot;</span>, <span class='ident'>f</span>)
+            }
+            <span class='ident'>Error</span>::<span class='ident'>FileNotFound</span>(<span class='kw-2'>ref</span> <span class='ident'>e</span>) <span class='op'>=&gt;</span> <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;File not found at: {}&quot;</span>, <span class='ident'>e</span>),
             <span class='ident'>Error</span>::<span class='ident'>IO</span>(<span class='kw-2'>ref</span> <span class='ident'>err</span>) <span class='op'>=&gt;</span> <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;{}&quot;</span>, <span class='ident'>err</span>),
-            <span class='ident'>Error</span>::<span class='ident'>JsonDecode</span>(<span class='kw-2'>ref</span> <span class='ident'>e</span>) <span class='op'>=&gt;</span> <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;JSON decoding error: {}&quot;</span>, <span class='ident'>e</span>),
-            <span class='ident'>Error</span>::<span class='ident'>JsonEncode</span>(<span class='kw-2'>ref</span> <span class='ident'>e</span>) <span class='op'>=&gt;</span> <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;JSON encoding error: {}&quot;</span>, <span class='ident'>e</span>),
-            <span class='ident'>Error</span>::<span class='ident'>StrFromUtf8Error</span>(<span class='kw-2'>ref</span> <span class='ident'>e</span>) <span class='op'>=&gt;</span> <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;{}&quot;</span>, <span class='ident'>e</span>),
+            <span class='ident'>Error</span>::<span class='ident'>ParseIntError</span>(<span class='kw-2'>ref</span> <span class='ident'>e</span>) <span class='op'>=&gt;</span> <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;{}&quot;</span>, <span class='ident'>e</span>),
             <span class='ident'>Error</span>::<span class='ident'>StringFromUtf8Error</span>(<span class='kw-2'>ref</span> <span class='ident'>e</span>) <span class='op'>=&gt;</span> <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;{}&quot;</span>, <span class='ident'>e</span>),
-            <span class='ident'>Error</span>::<span class='ident'>WireDecode</span>(<span class='kw-2'>ref</span> <span class='ident'>m</span>) <span class='op'>=&gt;</span> <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;Failed to decode wire message: {}&quot;</span>, <span class='ident'>m</span>),
+            <span class='ident'>Error</span>::<span class='ident'>Utf8Error</span>(<span class='kw-2'>ref</span> <span class='ident'>e</span>) <span class='op'>=&gt;</span> <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;{}&quot;</span>, <span class='ident'>e</span>),
         };
         <span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>f</span>, <span class='string'>&quot;{}&quot;</span>, <span class='ident'>msg</span>)
     }
@@ -203,16 +267,38 @@
 <span class='kw'>impl</span> <span class='ident'>error</span>::<span class='ident'>Error</span> <span class='kw'>for</span> <span class='ident'>Error</span> {
     <span class='kw'>fn</span> <span class='ident'>description</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>str</span> {
         <span class='kw'>match</span> <span class='op'>*</span><span class='self'>self</span> {
-            <span class='ident'>Error</span>::<span class='ident'>CryptoKeyError</span>(_) <span class='op'>=&gt;</span> <span class='string'>&quot;Missing or invalid key&quot;</span>,
-            <span class='ident'>Error</span>::<span class='ident'>FileNameError</span> <span class='op'>=&gt;</span> <span class='string'>&quot;Failed to extract a filename from a path&quot;</span>,
-            <span class='ident'>Error</span>::<span class='ident'>InvalidTomlError</span>(_) <span class='op'>=&gt;</span> <span class='string'>&quot;Invalid TOML&quot;</span>,
+            <span class='ident'>Error</span>::<span class='ident'>ConfigFileIO</span>(_) <span class='op'>=&gt;</span> <span class='string'>&quot;Unable to read the raw contents of a configuration file&quot;</span>,
+            <span class='ident'>Error</span>::<span class='ident'>ConfigFileSyntax</span>(_) <span class='op'>=&gt;</span> <span class='string'>&quot;Error parsing contents of configuration file&quot;</span>,
+            <span class='ident'>Error</span>::<span class='ident'>ConfigInvalidArray</span>(_) <span class='op'>=&gt;</span> {
+                <span class='string'>&quot;Invalid array of values encountered while parsing a configuration file&quot;</span>
+            }
+            <span class='ident'>Error</span>::<span class='ident'>ConfigInvalidIpv4Addr</span>(_) <span class='op'>=&gt;</span> {
+                <span class='string'>&quot;Invalid Ipv4 network address encountered while parsing a configuration file&quot;</span>
+            }
+            <span class='ident'>Error</span>::<span class='ident'>ConfigInvalidSocketAddrV4</span>(_) <span class='op'>=&gt;</span> {
+                <span class='string'>&quot;Invalid Ipv4 network address pair encountered while parsing a configuration file&quot;</span>
+            }
+            <span class='ident'>Error</span>::<span class='ident'>ConfigInvalidString</span>(_) <span class='op'>=&gt;</span> {
+                <span class='string'>&quot;Invalid string value encountered while parsing a configuration file&quot;</span>
+            }
+            <span class='ident'>Error</span>::<span class='ident'>FileNotFound</span>(_) <span class='op'>=&gt;</span> <span class='string'>&quot;File not found&quot;</span>,
             <span class='ident'>Error</span>::<span class='ident'>IO</span>(<span class='kw-2'>ref</span> <span class='ident'>err</span>) <span class='op'>=&gt;</span> <span class='ident'>err</span>.<span class='ident'>description</span>(),
-            <span class='ident'>Error</span>::<span class='ident'>JsonDecode</span>(_) <span class='op'>=&gt;</span> <span class='string'>&quot;JSON decoding error: {:?}&quot;</span>,
-            <span class='ident'>Error</span>::<span class='ident'>JsonEncode</span>(_) <span class='op'>=&gt;</span> <span class='string'>&quot;JSON encoding error&quot;</span>,
-            <span class='ident'>Error</span>::<span class='ident'>StrFromUtf8Error</span>(_) <span class='op'>=&gt;</span> <span class='string'>&quot;Failed to convert a string as UTF-8&quot;</span>,
-            <span class='ident'>Error</span>::<span class='ident'>StringFromUtf8Error</span>(_) <span class='op'>=&gt;</span> <span class='string'>&quot;Failed to convert a string as UTF-8&quot;</span>,
-            <span class='ident'>Error</span>::<span class='ident'>WireDecode</span>(_) <span class='op'>=&gt;</span> <span class='string'>&quot;Failed to decode wire message&quot;</span>,
+            <span class='ident'>Error</span>::<span class='ident'>ParseIntError</span>(_) <span class='op'>=&gt;</span> <span class='string'>&quot;Failed to parse an integer from a string!&quot;</span>,
+            <span class='ident'>Error</span>::<span class='ident'>StringFromUtf8Error</span>(_) <span class='op'>=&gt;</span> <span class='string'>&quot;Failed to convert a string from a Vec&lt;u8&gt; as UTF-8&quot;</span>,
+            <span class='ident'>Error</span>::<span class='ident'>Utf8Error</span>(_) <span class='op'>=&gt;</span> <span class='string'>&quot;Failed to interpret a sequence of bytes as a string&quot;</span>,
         }
+    }
+}
+
+<span class='kw'>impl</span> <span class='ident'>From</span><span class='op'>&lt;</span><span class='ident'>string</span>::<span class='ident'>FromUtf8Error</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Error</span> {
+    <span class='kw'>fn</span> <span class='ident'>from</span>(<span class='ident'>err</span>: <span class='ident'>string</span>::<span class='ident'>FromUtf8Error</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
+        <span class='ident'>Error</span>::<span class='ident'>StringFromUtf8Error</span>(<span class='ident'>err</span>)
+    }
+}
+
+<span class='kw'>impl</span> <span class='ident'>From</span><span class='op'>&lt;</span><span class='ident'>str</span>::<span class='ident'>Utf8Error</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Error</span> {
+    <span class='kw'>fn</span> <span class='ident'>from</span>(<span class='ident'>err</span>: <span class='ident'>str</span>::<span class='ident'>Utf8Error</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
+        <span class='ident'>Error</span>::<span class='ident'>Utf8Error</span>(<span class='ident'>err</span>)
     }
 }
 
@@ -222,27 +308,9 @@
     }
 }
 
-<span class='kw'>impl</span> <span class='ident'>From</span><span class='op'>&lt;</span><span class='ident'>json</span>::<span class='ident'>DecoderError</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Error</span> {
-    <span class='kw'>fn</span> <span class='ident'>from</span>(<span class='ident'>err</span>: <span class='ident'>json</span>::<span class='ident'>DecoderError</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='ident'>Error</span>::<span class='ident'>JsonDecode</span>(<span class='ident'>err</span>)
-    }
-}
-
-<span class='kw'>impl</span> <span class='ident'>From</span><span class='op'>&lt;</span><span class='ident'>json</span>::<span class='ident'>EncoderError</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Error</span> {
-    <span class='kw'>fn</span> <span class='ident'>from</span>(<span class='ident'>err</span>: <span class='ident'>json</span>::<span class='ident'>EncoderError</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='ident'>Error</span>::<span class='ident'>JsonEncode</span>(<span class='ident'>err</span>)
-    }
-}
-
-<span class='kw'>impl</span> <span class='ident'>From</span><span class='op'>&lt;</span><span class='ident'>str</span>::<span class='ident'>Utf8Error</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Error</span> {
-    <span class='kw'>fn</span> <span class='ident'>from</span>(<span class='ident'>err</span>: <span class='ident'>str</span>::<span class='ident'>Utf8Error</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='ident'>Error</span>::<span class='ident'>StrFromUtf8Error</span>(<span class='ident'>err</span>)
-    }
-}
-
-<span class='kw'>impl</span> <span class='ident'>From</span><span class='op'>&lt;</span><span class='ident'>string</span>::<span class='ident'>FromUtf8Error</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Error</span> {
-    <span class='kw'>fn</span> <span class='ident'>from</span>(<span class='ident'>err</span>: <span class='ident'>string</span>::<span class='ident'>FromUtf8Error</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='ident'>Error</span>::<span class='ident'>StringFromUtf8Error</span>(<span class='ident'>err</span>)
+<span class='kw'>impl</span> <span class='ident'>From</span><span class='op'>&lt;</span><span class='ident'>num</span>::<span class='ident'>ParseIntError</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Error</span> {
+    <span class='kw'>fn</span> <span class='ident'>from</span>(<span class='ident'>err</span>: <span class='ident'>num</span>::<span class='ident'>ParseIntError</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
+        <span class='ident'>Error</span>::<span class='ident'>ParseIntError</span>(<span class='ident'>err</span>)
     }
 }
 </pre>

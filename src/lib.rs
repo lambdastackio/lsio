@@ -20,9 +20,11 @@
 
 extern crate rustc_serialize;
 extern crate term;
+extern crate toml;
 
 #[macro_use]
 pub mod macros;
 pub mod commands;
 pub mod error;
+pub mod config;
 pub mod prompts;

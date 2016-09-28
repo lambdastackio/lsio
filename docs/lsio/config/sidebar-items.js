@@ -1,0 +1,1 @@
+initSidebarItems({"trait":[["ConfigFile","Defines the default ConfigFile operation of ```from_file``` and ```from_toml```"],["ParseInto",""]]});

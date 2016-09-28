@@ -1,6 +1,6 @@
 [package]
 name = "lsio"
-version = "0.1.10"
+version = "0.1.11"
 authors = ["Chris Jones <chris.jones@lambdastack.io>"]
 license = "Apache-2.0"
 readme = "README.md"
@@ -21,3 +21,4 @@ errno = "0.1.8"
 log = "0.3.6"
 env_logger = "0.3.4"
 rustc-serialize = "0.3.19"
+toml = "0.2"
