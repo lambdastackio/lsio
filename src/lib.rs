@@ -21,6 +21,7 @@
 extern crate rustc_serialize;
 extern crate term;
 extern crate toml;
+extern crate url;
 
 #[macro_use]
 pub mod macros;

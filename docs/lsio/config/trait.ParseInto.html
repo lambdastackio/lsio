@@ -47,10 +47,11 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a id='src-172' class='srclink' href='../../src/lsio/src/config.rs.html#98-100' title='goto source code'>[src]</a></span></h1>
+               </span><a id='src-181' class='srclink' href='../../src/lsio/src/config.rs.html#101-103' title='goto source code'>[src]</a></span></h1>
 <pre class='rust trait'>pub trait ParseInto&lt;T&gt; {
     fn <a href='#tymethod.parse_into' class='fnname'>parse_into</a>(&amp;self, field: &amp;'static <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>, out: &amp;mut T) -&gt; <a class='type' href='../../lsio/error/type.Result.html' title='lsio::error::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>&gt;;
-}</pre>
+}</pre><div class='docblock'><p>ParseInto allows for many different types to be converted for toml::Value types.</p>
+</div>
             <h2 id='required-methods'>Required Methods</h2>
             <div class='methods'>
         <h3 id='tymethod.parse_into' class='method stab '><span id='parse_into.v' class='invisible'><code>fn <a href='#tymethod.parse_into' class='fnname'>parse_into</a>(&amp;self, field: &amp;'static <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>, out: &amp;mut T) -&gt; <a class='type' href='../../lsio/error/type.Result.html' title='lsio::error::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>&gt;</code></span></h3></div>
@@ -59,6 +60,8 @@
     <li><code>impl ParseInto&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/std/net/addr/struct.SocketAddrV4.html' title='std::net::addr::SocketAddrV4'>SocketAddrV4</a>&gt;&gt; for <a class='enum' href='http://alexcrichton.com/toml-rs/toml/enum.Value.html' title='toml::Value'>Value</a></code></li>
 <li><code>impl ParseInto&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/std/net/addr/struct.SocketAddrV4.html' title='std::net::addr::SocketAddrV4'>SocketAddrV4</a>&gt; for <a class='enum' href='http://alexcrichton.com/toml-rs/toml/enum.Value.html' title='toml::Value'>Value</a></code></li>
 <li><code>impl ParseInto&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/std/net/ip/struct.Ipv4Addr.html' title='std::net::ip::Ipv4Addr'>Ipv4Addr</a>&gt; for <a class='enum' href='http://alexcrichton.com/toml-rs/toml/enum.Value.html' title='toml::Value'>Value</a></code></li>
+<li><code>impl ParseInto&lt;Url&gt; for <a class='enum' href='http://alexcrichton.com/toml-rs/toml/enum.Value.html' title='toml::Value'>Value</a></code></li>
+<li><code>impl ParseInto&lt;<a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;Url&gt;&gt; for <a class='enum' href='http://alexcrichton.com/toml-rs/toml/enum.Value.html' title='toml::Value'>Value</a></code></li>
 <li><code>impl ParseInto&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt; for <a class='enum' href='http://alexcrichton.com/toml-rs/toml/enum.Value.html' title='toml::Value'>Value</a></code></li>
 <li><code>impl ParseInto&lt;<a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;&gt; for <a class='enum' href='http://alexcrichton.com/toml-rs/toml/enum.Value.html' title='toml::Value'>Value</a></code></li>
 <li><code>impl ParseInto&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>&gt; for <a class='enum' href='http://alexcrichton.com/toml-rs/toml/enum.Value.html' title='toml::Value'>Value</a></code></li>

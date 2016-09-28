@@ -24,6 +24,7 @@ use std::result;
 use std::str::FromStr;
 
 use toml;
+use url::Url;
 
 use error::{Error, Result};
 
@@ -95,6 +96,8 @@ pub trait ConfigFile: Sized {
     fn from_toml(toml: toml::Value) -> result::Result<Self, Self::Error>;
 }
 
+/// ParseInto allows for many different types to be converted for toml::Value types.
+///
 pub trait ParseInto<T> {
     fn parse_into(&self, field: &'static str, out: &mut T) -> Result<bool>;
 }
@@ -159,6 +162,36 @@ impl ParseInto<net::Ipv4Addr> for toml::Value {
                 }
             } else {
                 Err(Error::ConfigInvalidIpv4Addr(field))
+            }
+        } else {
+            Ok(false)
+        }
+    }
+}
+
+impl ParseInto<Url> for toml::Value {
+    fn parse_into(&self, field: &'static str, out: &mut Url) -> Result<bool> {
+        if let Some(val) = self.lookup(field) {
+            if let Some(v) = val.as_str() {
+                *out = Url::parse(v).unwrap();
+                Ok(true)
+            } else {
+                Err(Error::ConfigInvalidUrl(field))
+            }
+        } else {
+            Ok(false)
+        }
+    }
+}
+
+impl ParseInto<Option<Url>> for toml::Value {
+    fn parse_into(&self, field: &'static str, out: &mut Option<Url>) -> Result<bool> {
+        if let Some(val) = self.lookup(field) {
+            if let Some(v) = val.as_str() {
+                *out = Some(Url::parse(v).unwrap());
+                Ok(true)
+            } else {
+                Err(Error::ConfigInvalidUrl(field))
             }
         } else {
             Ok(false)

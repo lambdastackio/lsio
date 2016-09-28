@@ -1,1 +1,1 @@
-initSidebarItems({"trait":[["ConfigFile","Defines the default ConfigFile operation of ```from_file``` and ```from_toml```"],["ParseInto",""]]});
+initSidebarItems({"trait":[["ConfigFile","Defines the default ConfigFile operation of ```from_file``` and ```from_toml```"],["ParseInto","ParseInto allows for many different types to be converted for toml::Value types."]]});

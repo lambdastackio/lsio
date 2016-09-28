@@ -39,6 +39,8 @@ pub enum Error {
     ConfigInvalidSocketAddrV4(&'static str),
     /// Expected a string for configuration field value.
     ConfigInvalidString(&'static str),
+    /// Expected a URL for configuration field value.
+    ConfigInvalidUrl(&'static str),
     /// Occurs when a file that should exist does not or could not be read.
     FileNotFound(String),
     /// Occurs when making lower level IO calls.
@@ -74,6 +76,9 @@ impl fmt::Display for Error {
             Error::ConfigInvalidString(ref f) => {
                 format!("Invalid string value in config, field={}.", f)
             }
+            Error::ConfigInvalidUrl(ref f) => {
+                format!("Invalid URL value in config, field={}.", f)
+            }
             Error::FileNotFound(ref e) => format!("File not found at: {}", e),
             Error::IO(ref err) => format!("{}", err),
             Error::ParseIntError(ref e) => format!("{}", e),
@@ -100,6 +105,9 @@ impl error::Error for Error {
             }
             Error::ConfigInvalidString(_) => {
                 "Invalid string value encountered while parsing a configuration file"
+            }
+            Error::ConfigInvalidUrl(_) => {
+                "Invalid URL value encountered while parsing a configuration file"
             }
             Error::FileNotFound(_) => "File not found",
             Error::IO(ref err) => err.description(),

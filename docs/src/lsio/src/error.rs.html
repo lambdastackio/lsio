@@ -177,6 +177,14 @@
 <span id="133">133</span>
 <span id="134">134</span>
 <span id="135">135</span>
+<span id="136">136</span>
+<span id="137">137</span>
+<span id="138">138</span>
+<span id="139">139</span>
+<span id="140">140</span>
+<span id="141">141</span>
+<span id="142">142</span>
+<span id="143">143</span>
 </pre><pre class='rust '>
 <span class='comment'>// Copyright 2016 LambdaStack All rights reserved.</span>
 <span class='comment'>//</span>
@@ -219,6 +227,8 @@
     <span class='ident'>ConfigInvalidSocketAddrV4</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;static</span> <span class='ident'>str</span>),
     <span class='doccomment'>/// Expected a string for configuration field value.</span>
     <span class='ident'>ConfigInvalidString</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;static</span> <span class='ident'>str</span>),
+    <span class='doccomment'>/// Expected a URL for configuration field value.</span>
+    <span class='ident'>ConfigInvalidUrl</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;static</span> <span class='ident'>str</span>),
     <span class='doccomment'>/// Occurs when a file that should exist does not or could not be read.</span>
     <span class='ident'>FileNotFound</span>(<span class='ident'>String</span>),
     <span class='doccomment'>/// Occurs when making lower level IO calls.</span>
@@ -254,6 +264,9 @@
             <span class='ident'>Error</span>::<span class='ident'>ConfigInvalidString</span>(<span class='kw-2'>ref</span> <span class='ident'>f</span>) <span class='op'>=&gt;</span> {
                 <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;Invalid string value in config, field={}.&quot;</span>, <span class='ident'>f</span>)
             }
+            <span class='ident'>Error</span>::<span class='ident'>ConfigInvalidUrl</span>(<span class='kw-2'>ref</span> <span class='ident'>f</span>) <span class='op'>=&gt;</span> {
+                <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;Invalid URL value in config, field={}.&quot;</span>, <span class='ident'>f</span>)
+            }
             <span class='ident'>Error</span>::<span class='ident'>FileNotFound</span>(<span class='kw-2'>ref</span> <span class='ident'>e</span>) <span class='op'>=&gt;</span> <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;File not found at: {}&quot;</span>, <span class='ident'>e</span>),
             <span class='ident'>Error</span>::<span class='ident'>IO</span>(<span class='kw-2'>ref</span> <span class='ident'>err</span>) <span class='op'>=&gt;</span> <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;{}&quot;</span>, <span class='ident'>err</span>),
             <span class='ident'>Error</span>::<span class='ident'>ParseIntError</span>(<span class='kw-2'>ref</span> <span class='ident'>e</span>) <span class='op'>=&gt;</span> <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;{}&quot;</span>, <span class='ident'>e</span>),
@@ -280,6 +293,9 @@
             }
             <span class='ident'>Error</span>::<span class='ident'>ConfigInvalidString</span>(_) <span class='op'>=&gt;</span> {
                 <span class='string'>&quot;Invalid string value encountered while parsing a configuration file&quot;</span>
+            }
+            <span class='ident'>Error</span>::<span class='ident'>ConfigInvalidUrl</span>(_) <span class='op'>=&gt;</span> {
+                <span class='string'>&quot;Invalid URL value encountered while parsing a configuration file&quot;</span>
             }
             <span class='ident'>Error</span>::<span class='ident'>FileNotFound</span>(_) <span class='op'>=&gt;</span> <span class='string'>&quot;File not found&quot;</span>,
             <span class='ident'>Error</span>::<span class='ident'>IO</span>(<span class='kw-2'>ref</span> <span class='ident'>err</span>) <span class='op'>=&gt;</span> <span class='ident'>err</span>.<span class='ident'>description</span>(),
