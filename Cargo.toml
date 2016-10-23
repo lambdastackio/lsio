@@ -1,6 +1,6 @@
 [package]
 name = "lsio"
-version = "0.1.12"
+version = "0.1.13"
 authors = ["Chris Jones <chris.jones@lambdastack.io>"]
 license = "Apache-2.0"
 readme = "README.md"
@@ -17,9 +17,10 @@ good libraries plus adds a number of it's own. Heavy dev beware!
 ssh2 = "0.2"
 rpassword = "0.2.3"
 term = "0.4"
-errno = "0.1.8"
+errno = "0.1"
 log = "0.3.6"
 env_logger = "0.3.4"
 rustc-serialize = "0.3.19"
 toml = "0.2"
 url = "1"
+libc = "0.2"

@@ -45,10 +45,14 @@ pub enum Error {
     FileNotFound(String),
     /// Occurs when making lower level IO calls.
     IO(io::Error),
+    /// IP Address error
+    IPFailed,
     /// When an error occurs parsing an integer.
     ParseIntError(num::ParseIntError),
     /// When an error occurs converting a `String` from a UTF-8 byte vector.
     StringFromUtf8Error(string::FromUtf8Error),
+    /// Occurs when a `uname` libc call returns an error.
+    UnameFailed(String),
     /// When an error occurs attempting to interpret a sequence of u8 as a string.
     Utf8Error(str::Utf8Error),
 }
@@ -81,8 +85,10 @@ impl fmt::Display for Error {
             }
             Error::FileNotFound(ref e) => format!("File not found at: {}", e),
             Error::IO(ref err) => format!("{}", err),
+            Error::IPFailed => format!("Failed to discover this hosts IP address"),
             Error::ParseIntError(ref e) => format!("{}", e),
             Error::StringFromUtf8Error(ref e) => format!("{}", e),
+            Error::UnameFailed(ref e) => format!("{}", e),
             Error::Utf8Error(ref e) => format!("{}", e),
         };
         write!(f, "{}", msg)
@@ -111,8 +117,10 @@ impl error::Error for Error {
             }
             Error::FileNotFound(_) => "File not found",
             Error::IO(ref err) => err.description(),
+            Error::IPFailed => "Failed to discover this hosts IP address",
             Error::ParseIntError(_) => "Failed to parse an integer from a string!",
             Error::StringFromUtf8Error(_) => "Failed to convert a string from a Vec<u8> as UTF-8",
+            Error::UnameFailed(_) => "Failed to get uname on host",
             Error::Utf8Error(_) => "Failed to interpret a sequence of bytes as a string",
         }
     }
