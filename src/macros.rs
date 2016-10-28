@@ -14,7 +14,20 @@
 //
 
 #[allow(unused_imports)]
+
 use term;
+
+/// Sizes and zero fills a vector of bytes for a buffer.
+///
+#[macro_export]
+macro_rules! zero_fill_buffer {
+    ($buffer:expr, $len:expr) => {
+        $buffer = Vec::with_capacity($len as usize);
+        for i in 0..$len {
+            $buffer.push(0);
+        }
+    };
+}
 
 // NOTE: Had to add {} block around let mut t below because it was a statement.
 
@@ -38,7 +51,7 @@ macro_rules! print_color {
 macro_rules! println_color_quiet {
     ($quiet:expr, $color:expr, $($arg:tt)*) => {
         {
-            if $quiet == false {
+            if !$quiet {
                 let mut t = term::stderr().unwrap();
                 t.fg($color).unwrap();
                 print!($($arg)*);
@@ -61,12 +74,12 @@ macro_rules! println_color {
 #[macro_export]
 macro_rules! println_color_quiet {
     ($quiet: expr, $color:expr, $fmt:expr) => {
-        if $quiet == false {
+        if !$quiet {
             print_color!($color, concat!($fmt, "\n"));
         }
     };
     ($quiet: expr, $color:expr, $fmt:expr, $($arg:tt)*) => {
-        if $quiet == false {
+        if !$quiet {
             print_color!($color, concat!($fmt, "\n"), $($arg)*);
         }
     };
@@ -125,7 +138,7 @@ macro_rules! repeat_color_with_ends {
 #[macro_export]
 macro_rules! repeat_color_quiet {
     ($quiet:expr, $color:expr, $e:expr, $text, $size:expr) => {
-        if $quiet == false {
+        if !$quiet {
             repeat_color!($color, $e, $text, $size);
         }
     }
