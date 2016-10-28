@@ -45,6 +45,7 @@ macro_rules! print_color {
     };
 }
 
+
 /// print_color! with quiet option.
 ///
 #[macro_export]
@@ -67,6 +68,30 @@ macro_rules! println_color_quiet {
 macro_rules! println_color {
     ($color:expr, $fmt:expr) => (print_color!($color, concat!($fmt, "\n")));
     ($color:expr, $fmt:expr, $($arg:tt)*) => (print_color!($color, concat!($fmt, "\n"), $($arg)*));
+}
+
+/// println! with RED.
+///
+#[macro_export]
+macro_rules! println_color_red {
+    ($fmt:expr) => (print_color!(term::color::RED, concat!($fmt, "\n")));
+    ($fmt:expr, $($arg:tt)*) => (print_color!(term::color::RED, concat!($fmt, "\n"), $($arg)*));
+}
+
+/// println! with GREEN.
+///
+#[macro_export]
+macro_rules! println_color_green {
+    ($fmt:expr) => (print_color!(term::color::GREEN, concat!($fmt, "\n")));
+    ($fmt:expr, $($arg:tt)*) => (print_color!(term::color::GREEN, concat!($fmt, "\n"), $($arg)*));
+}
+
+/// println! with YELLOW.
+///
+#[macro_export]
+macro_rules! println_color_yellow {
+    ($fmt:expr) => (print_color!(term::color::YELLOW, concat!($fmt, "\n")));
+    ($fmt:expr, $($arg:tt)*) => (print_color!(term::color::YELLOW, concat!($fmt, "\n"), $($arg)*));
 }
 
 /// println_color! with a quiet option.
