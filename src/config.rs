@@ -77,18 +77,18 @@ pub trait ConfigFile: Sized {
     fn from_file<T: AsRef<Path>>(filepath: T) -> result::Result<Self, Self::Error> {
         let mut file = match File::open(filepath.as_ref()) {
             Ok(f) => f,
-            Err(e) => return Err(Self::Error::from(Error::ConfigFileIO(e))),
+            Err(e) => return Err(Self::Error::from(Error::FileIO(e))),
         };
         let mut raw = String::new();
         match file.read_to_string(&mut raw) {
             Ok(_) => (),
-            Err(e) => return Err(Self::Error::from(Error::ConfigFileIO(e))),
+            Err(e) => return Err(Self::Error::from(Error::FileIO(e))),
         }
         match raw.parse() {
             Ok(toml) => Self::from_toml(toml),
             Err(e) => {
                 let msg = format_errors(&e);
-                Err(Self::Error::from(Error::ConfigFileSyntax(msg)))
+                Err(Self::Error::from(Error::FileSyntax(msg)))
             }
         }
     }
@@ -111,10 +111,10 @@ impl ParseInto<Vec<net::SocketAddrV4>> for toml::Value {
                     if let Some(v) = entry.as_str() {
                         match net::SocketAddrV4::from_str(v) {
                             Ok(addr) => buf.push(addr),
-                            Err(_) => return Err(Error::ConfigInvalidSocketAddrV4(field)),
+                            Err(_) => return Err(Error::InvalidSocketAddrV4(field)),
                         }
                     } else {
-                        return Err(Error::ConfigInvalidSocketAddrV4(field));
+                        return Err(Error::InvalidSocketAddrV4(field));
                     }
                 }
                 *out = buf;
@@ -138,10 +138,10 @@ impl ParseInto<net::SocketAddrV4> for toml::Value {
                         *out = addr;
                         Ok(true)
                     }
-                    Err(_) => Err(Error::ConfigInvalidSocketAddrV4(field)),
+                    Err(_) => Err(Error::InvalidSocketAddrV4(field)),
                 }
             } else {
-                Err(Error::ConfigInvalidSocketAddrV4(field))
+                Err(Error::InvalidSocketAddrV4(field))
             }
         } else {
             Ok(false)
@@ -158,10 +158,10 @@ impl ParseInto<net::Ipv4Addr> for toml::Value {
                         *out = addr;
                         Ok(true)
                     }
-                    Err(_) => Err(Error::ConfigInvalidIpv4Addr(field)),
+                    Err(_) => Err(Error::InvalidIpv4Addr(field)),
                 }
             } else {
-                Err(Error::ConfigInvalidIpv4Addr(field))
+                Err(Error::InvalidIpv4Addr(field))
             }
         } else {
             Ok(false)
@@ -176,7 +176,7 @@ impl ParseInto<Url> for toml::Value {
                 *out = Url::parse(v).unwrap();
                 Ok(true)
             } else {
-                Err(Error::ConfigInvalidUrl(field))
+                Err(Error::InvalidUrl(field))
             }
         } else {
             Ok(false)
@@ -191,7 +191,7 @@ impl ParseInto<Option<Url>> for toml::Value {
                 *out = Some(Url::parse(v).unwrap());
                 Ok(true)
             } else {
-                Err(Error::ConfigInvalidUrl(field))
+                Err(Error::InvalidUrl(field))
             }
         } else {
             Ok(false)
@@ -206,7 +206,7 @@ impl ParseInto<String> for toml::Value {
                 *out = v.to_string();
                 Ok(true)
             } else {
-                Err(Error::ConfigInvalidString(field))
+                Err(Error::InvalidString(field))
             }
         } else {
             Ok(false)
@@ -221,7 +221,7 @@ impl ParseInto<Option<String>> for toml::Value {
                 *out = Some(v.to_string());
                 Ok(true)
             } else {
-                Err(Error::ConfigInvalidString(field))
+                Err(Error::InvalidString(field))
             }
         } else {
             *out = None;
@@ -237,7 +237,7 @@ impl ParseInto<usize> for toml::Value {
                 *out = v as usize;
                 Ok(true)
             } else {
-                Err(Error::ConfigInvalidString(field))
+                Err(Error::InvalidString(field))
             }
         } else {
             Ok(false)
@@ -252,7 +252,7 @@ impl ParseInto<u16> for toml::Value {
                 *out = v as u16;
                 Ok(true)
             } else {
-                Err(Error::ConfigInvalidString(field))
+                Err(Error::InvalidString(field))
             }
         } else {
             Ok(false)
@@ -267,7 +267,7 @@ impl ParseInto<u32> for toml::Value {
                 *out = v as u32;
                 Ok(true)
             } else {
-                Err(Error::ConfigInvalidString(field))
+                Err(Error::InvalidString(field))
             }
         } else {
             Ok(false)
@@ -282,7 +282,7 @@ impl ParseInto<u64> for toml::Value {
                 *out = v as u64;
                 Ok(true)
             } else {
-                Err(Error::ConfigInvalidString(field))
+                Err(Error::InvalidString(field))
             }
         } else {
             Ok(false)
@@ -299,13 +299,13 @@ impl ParseInto<Vec<u16>> for toml::Value {
                     if let Some(i) = int.as_integer() {
                         buf.push(i as u16);
                     } else {
-                        return Err(Error::ConfigInvalidArray(field));
+                        return Err(Error::InvalidArray(field));
                     }
                 }
                 *out = buf;
                 Ok(true)
             } else {
-                Err(Error::ConfigInvalidArray(field))
+                Err(Error::InvalidArray(field))
             }
         } else {
             Ok(false)
@@ -322,13 +322,13 @@ impl ParseInto<Vec<u32>> for toml::Value {
                     if let Some(i) = int.as_integer() {
                         buf.push(i as u32);
                     } else {
-                        return Err(Error::ConfigInvalidArray(field));
+                        return Err(Error::InvalidArray(field));
                     }
                 }
                 *out = buf;
                 Ok(true)
             } else {
-                Err(Error::ConfigInvalidArray(field))
+                Err(Error::InvalidArray(field))
             }
         } else {
             Ok(false)
@@ -345,13 +345,13 @@ impl ParseInto<Vec<u64>> for toml::Value {
                     if let Some(i) = int.as_integer() {
                         buf.push(i as u64);
                     } else {
-                        return Err(Error::ConfigInvalidArray(field));
+                        return Err(Error::InvalidArray(field));
                     }
                 }
                 *out = buf;
                 Ok(true)
             } else {
-                Err(Error::ConfigInvalidArray(field))
+                Err(Error::InvalidArray(field))
             }
         } else {
             Ok(false)
@@ -394,7 +394,7 @@ impl ParseInto<Vec<BTreeMap<String, String>>> for toml::Value {
                 *out = buf;
                 Ok(true)
             } else {
-                Err(Error::ConfigInvalidArray(field))
+                Err(Error::InvalidArray(field))
             }
         } else {
             Ok(false)

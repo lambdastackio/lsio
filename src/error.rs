@@ -27,20 +27,20 @@ pub type Result<T> = result::Result<T, Error>;
 /// Core error types
 #[derive(Debug)]
 pub enum Error {
-    /// Error reading raw contents of configuration file.
-    ConfigFileIO(io::Error),
-    /// Parsing error while reading a configuration file.
-    ConfigFileSyntax(String),
-    /// Expected a valid array of values for configuration field value.
-    ConfigInvalidArray(&'static str),
-    /// Expected a valid Ipv4 network address for configuration field value.
-    ConfigInvalidIpv4Addr(&'static str),
-    /// Expected a valid SocketAddrV4 address pair for configuration field value.
-    ConfigInvalidSocketAddrV4(&'static str),
-    /// Expected a string for configuration field value.
-    ConfigInvalidString(&'static str),
-    /// Expected a URL for configuration field value.
-    ConfigInvalidUrl(&'static str),
+    /// Error reading raw contents of file.
+    FileIO(io::Error),
+    /// Parsing error while reading a file. For example, JSON, TOML, YAML, etc
+    FileSyntax(String),
+    /// Expected a valid array of values for field value.
+    InvalidArray(&'static str),
+    /// Expected a valid Ipv4 network address for field value.
+    InvalidIpv4Addr(&'static str),
+    /// Expected a valid SocketAddrV4 address pair for field value.
+    InvalidSocketAddrV4(&'static str),
+    /// Expected a string for field value.
+    InvalidString(&'static str),
+    /// Expected a URL for field value.
+    InvalidUrl(&'static str),
     /// Occurs when a file that should exist does not or could not be read.
     FileNotFound(String),
     /// Occurs when making lower level IO calls.
@@ -60,28 +60,28 @@ pub enum Error {
 impl fmt::Display for Error {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let msg = match *self {
-            Error::ConfigFileIO(ref e) => format!("Error reading configuration file: {}", e),
-            Error::ConfigFileSyntax(ref e) => {
-                format!("Syntax errors while parsing TOML configuration file:\n\n{}",
+            Error::FileIO(ref e) => format!("Error reading file: {}", e),
+            Error::FileSyntax(ref e) => {
+                format!("Syntax errors while parsing file:\n\n{}",
                         e)
             }
-            Error::ConfigInvalidArray(ref f) => {
-                format!("Invalid array of values in config, field={}", f)
+            Error::InvalidArray(ref f) => {
+                format!("Invalid array of values, field={}", f)
             }
-            Error::ConfigInvalidIpv4Addr(ref f) => {
-                format!("Invalid Ipv4 address in config, field={}. (example: \"127.0.0.0\")",
+            Error::InvalidIpv4Addr(ref f) => {
+                format!("Invalid Ipv4 address, field={}. (example: \"127.0.0.0\")",
                         f)
             }
-            Error::ConfigInvalidSocketAddrV4(ref f) => {
-                format!("Invalid Ipv4 network address pair in config, field={}. (example: \
+            Error::InvalidSocketAddrV4(ref f) => {
+                format!("Invalid Ipv4 network address pair, field={}. (example: \
                          \"127.0.0.0:8080\")",
                         f)
             }
-            Error::ConfigInvalidString(ref f) => {
-                format!("Invalid string value in config, field={}.", f)
+            Error::InvalidString(ref f) => {
+                format!("Invalid string value, field={}.", f)
             }
-            Error::ConfigInvalidUrl(ref f) => {
-                format!("Invalid URL value in config, field={}.", f)
+            Error::InvalidUrl(ref f) => {
+                format!("Invalid URL value, field={}.", f)
             }
             Error::FileNotFound(ref e) => format!("File not found at: {}", e),
             Error::IO(ref err) => format!("{}", err),
@@ -98,22 +98,22 @@ impl fmt::Display for Error {
 impl error::Error for Error {
     fn description(&self) -> &str {
         match *self {
-            Error::ConfigFileIO(_) => "Unable to read the raw contents of a configuration file",
-            Error::ConfigFileSyntax(_) => "Error parsing contents of configuration file",
-            Error::ConfigInvalidArray(_) => {
-                "Invalid array of values encountered while parsing a configuration file"
+            Error::FileIO(_) => "Unable to read the raw contents of file",
+            Error::FileSyntax(_) => "Error parsing contents of file",
+            Error::InvalidArray(_) => {
+                "Invalid array of values encountered while parsing file"
             }
-            Error::ConfigInvalidIpv4Addr(_) => {
-                "Invalid Ipv4 network address encountered while parsing a configuration file"
+            Error::InvalidIpv4Addr(_) => {
+                "Invalid Ipv4 network address encountered while parsing file"
             }
-            Error::ConfigInvalidSocketAddrV4(_) => {
-                "Invalid Ipv4 network address pair encountered while parsing a configuration file"
+            Error::InvalidSocketAddrV4(_) => {
+                "Invalid Ipv4 network address pair encountered while parsing file"
             }
-            Error::ConfigInvalidString(_) => {
-                "Invalid string value encountered while parsing a configuration file"
+            Error::InvalidString(_) => {
+                "Invalid string value encountered while parsing a file"
             }
-            Error::ConfigInvalidUrl(_) => {
-                "Invalid URL value encountered while parsing a configuration file"
+            Error::InvalidUrl(_) => {
+                "Invalid URL value encountered while parsing file"
             }
             Error::FileNotFound(_) => "File not found",
             Error::IO(ref err) => err.description(),
