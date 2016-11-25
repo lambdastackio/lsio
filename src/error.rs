@@ -24,11 +24,15 @@ use std::string;
 
 pub type Result<T> = result::Result<T, Error>;
 
-/// Core error types
+/// Core error types. Used in many LSIO projects
 #[derive(Debug)]
 pub enum Error {
+    /// Command for CLIs
+    CommandNotRecognized(String),
     /// Error reading raw contents of file.
     FileIO(io::Error),
+    /// Occurs when a file that should exist does not or could not be read.
+    FileNotFound(String),
     /// Parsing error while reading a file. For example, JSON, TOML, YAML, etc
     FileSyntax(String),
     /// Expected a valid array of values for field value.
@@ -41,8 +45,6 @@ pub enum Error {
     InvalidString(&'static str),
     /// Expected a URL for field value.
     InvalidUrl(&'static str),
-    /// Occurs when a file that should exist does not or could not be read.
-    FileNotFound(String),
     /// Occurs when making lower level IO calls.
     IO(io::Error),
     /// IP Address error
@@ -60,7 +62,9 @@ pub enum Error {
 impl fmt::Display for Error {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let msg = match *self {
+            Error::CommandNotRecognized(ref e) => format!("Command not recognized: {}", e),
             Error::FileIO(ref e) => format!("Error reading file: {}", e),
+            Error::FileNotFound(ref e) => format!("File not found at: {}", e),
             Error::FileSyntax(ref e) => {
                 format!("Syntax errors while parsing file:\n\n{}",
                         e)
@@ -83,7 +87,6 @@ impl fmt::Display for Error {
             Error::InvalidUrl(ref f) => {
                 format!("Invalid URL value, field={}.", f)
             }
-            Error::FileNotFound(ref e) => format!("File not found at: {}", e),
             Error::IO(ref err) => format!("{}", err),
             Error::IPFailed => format!("Failed to discover this hosts IP address"),
             Error::ParseIntError(ref e) => format!("{}", e),
@@ -98,7 +101,9 @@ impl fmt::Display for Error {
 impl error::Error for Error {
     fn description(&self) -> &str {
         match *self {
+            Error::CommandNotRecognized(_) => "Command not recognized",
             Error::FileIO(_) => "Unable to read the raw contents of file",
+            Error::FileNotFound(_) => "File not found",
             Error::FileSyntax(_) => "Error parsing contents of file",
             Error::InvalidArray(_) => {
                 "Invalid array of values encountered while parsing file"
@@ -115,7 +120,6 @@ impl error::Error for Error {
             Error::InvalidUrl(_) => {
                 "Invalid URL value encountered while parsing file"
             }
-            Error::FileNotFound(_) => "File not found",
             Error::IO(ref err) => err.description(),
             Error::IPFailed => "Failed to discover this hosts IP address",
             Error::ParseIntError(_) => "Failed to parse an integer from a string!",
