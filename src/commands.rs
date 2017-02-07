@@ -32,7 +32,7 @@ pub fn run_args(cmd: &str, args: &[String], shell: bool) -> Result<(Output)> {
 
     if args.len() > 0 {
         if !shell {
-            output = try!(Command::new(cmd).args(&args).output());
+            output = try!(Command::new(cmd).args(args.iter()).output());
         } else {
             let mut arg_string = String::new();
             arg_string = arg_string + cmd + " ";
