@@ -1,4 +1,4 @@
-// Copyright 2016 LambdaStack All rights reserved.
+// Copyright 2017 LambdaStack All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -162,7 +162,7 @@ macro_rules! repeat_color_with_ends {
 /// repeat_color! with quiet option.
 #[macro_export]
 macro_rules! repeat_color_quiet {
-    ($quiet:expr, $color:expr, $e:expr, $text, $size:expr) => {
+    ($quiet:expr, $color:expr, $e:expr, $text:expr, $size:expr) => {
         if !$quiet {
             repeat_color!($color, $e, $text, $size);
         }
