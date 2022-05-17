@@ -45,11 +45,10 @@ macro_rules! print_color {
     };
 }
 
-
 /// print_color! with quiet option.
 ///
 #[macro_export]
-macro_rules! println_color_quiet {
+macro_rules! print_color_quiet {
     ($quiet:expr, $color:expr, $($arg:tt)*) => {
         {
             if !$quiet {
