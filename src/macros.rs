@@ -14,7 +14,6 @@
 //
 
 #[allow(unused_imports)]
-
 use term;
 
 /// Sizes and zero fills a vector of bytes for a buffer.
@@ -45,11 +44,10 @@ macro_rules! print_color {
     };
 }
 
-
 /// print_color! with quiet option.
 ///
 #[macro_export]
-macro_rules! println_color_quiet {
+macro_rules! print_color_quiet {
     ($quiet:expr, $color:expr, $($arg:tt)*) => {
         {
             if !$quiet {
@@ -157,7 +155,6 @@ macro_rules! repeat_color_with_ends {
         println_color!($color, "{}{}{}{}{}{}", left_end, repeated, overlay, repeated, fill, right_end);
     }
 }
-
 
 /// repeat_color! with quiet option.
 #[macro_export]
